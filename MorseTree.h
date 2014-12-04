@@ -19,6 +19,12 @@ public:
 	void setTreeCode(istream& theStream);
 	void outputTree(ostream& theStream);
 
+	//Chase Peterson
+	//Decode function
+		//Takes a string of dots and dashes seperated by spaces
+		//Returns decoded string of letters
+	string decode(string input);
+
 private:
 	Binary_Tree<char> codeTree;
 	void addCode(string theInput);
