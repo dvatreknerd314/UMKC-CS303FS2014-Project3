@@ -1,4 +1,4 @@
-﻿// David Allen
+// David Allen
 // 11/30/14
 // UMKC CS303 - FS14
 
@@ -72,7 +72,7 @@ bool MorseTree::syntaxCheck(string theInput)
 			}
 			else if (SYMBOLS.find(theInput[i]) == string::npos) { // The code area has an invalid character
 				cout << "ERROR: Line " << lineCounter << " has invalid characters in the symbol's code." << endl;
-				returnThis = false; 
+				returnThis = false;
 			}
 		}
 	}
@@ -85,7 +85,7 @@ void MorseTree::addCode(string theInput)
 	string theCode = theInput.substr(2, 4); // Isolate the code substring
 	if (processedSymbols.find(theData) == string::npos) // If we don't find this character we haven't processed it yet
 	{
-		if (recursiveAdd(theData, theCode, 0, codeTree.getRoot()) )
+		if (recursiveAdd(theData, theCode, 0, codeTree.getRoot()))
 			processedSymbols += theData; // Add this to the list of processed symbols
 	}
 	else // We have processed this character before and the current line is a duplicate or attempted rewrite
@@ -125,7 +125,7 @@ bool MorseTree::recursiveAdd(char theData, string theCode, int index, BTNode<cha
 				theNode->right = new BTNode<char>('\0'); // Create a temporary node to support the rest of the tree
 			theNode = theNode->right;
 		}
-		return recursiveAdd(theData, theCode, index+1, theNode);
+		return recursiveAdd(theData, theCode, index + 1, theNode);
 	}
 }
 
@@ -160,7 +160,7 @@ void MorseTree::recursiveTreeOutput(int depth, size_t& width, size_t& rootPos, B
 	// These are subarrays for the left and right subtrees
 	deque<deque<char>> leftArray, rightArray;
 	// These are the left and right width, as well as the left and right root node indices
-	size_t left=0, right=0, leftIndex=0, rightIndex = 0;
+	size_t left = 0, right = 0, leftIndex = 0, rightIndex = 0;
 
 	if (currentNode->left != NULL) // If there is a left child, generate a subarray recursively
 	{
@@ -294,5 +294,56 @@ void MorseTree::recursiveTreeOutput(int depth, size_t& width, size_t& rootPos, B
 			}
 		}
 	}
+
+}
+
+//Chase Peterson
+
+string MorseTree::decode(string input)
+{
+	BTNode<char>* current = codeTree.getRoot();
+	string solution;
+
+	//We need to add a space to the end of the input for the algorithm
+	input += ' ';
+
+
+	for (string::iterator itr = input.begin(); itr != input.end(); ++itr)
+	{
+		//Is the character a dash?
+		if (DASHES.find(*itr) != -1)
+		{
+			//we need to move to the right
+			current = current->right;
+		}
+		//Is the character a dot?
+		else if (DOTS.find(*itr) != -1)
+		{
+			//we need to go left
+			current = current->left;
+		}
+		//Is there a space?
+		else if (*itr == ' ')
+		{
+			//Ideally we have reached the end of a coded letter
+			//and are not still pointing at the head
+			if (current != codeTree.getRoot())
+				solution += current->data;
+			
+			//After a space we'll reset to the head regardless
+			current = codeTree.getRoot();
+		}
+		//After making a move if we are pointing to NULL we had an invalid
+		//code so we'll exit with an error
+		if (current == NULL)
+		{
+			cout << endl << "ERROR: Invalid morse character" << endl << endl;
+		
+			return "ERROR";
+		}
+	}
+	return solution;
 	
+
+
 }
