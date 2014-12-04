@@ -5,9 +5,11 @@ using namespace std;
 
 int main()
 {
+	
 	MorseTree theTree;
 	ifstream fin;
 	string filePath;
+	char input[256];
 
 	cout << "Specify file path: " << endl;
 	cin >> filePath;
@@ -25,8 +27,20 @@ int main()
 
 	theTree.outputTree(cout);
 
-	cin >> filePath;
 
+	cin.ignore();
 
-	return 0;
+	//The following tests decode
+	while (true)
+	{
+		cout << "Enter a code to decode: " << endl;
+		cin.getline(input, 256);
+
+		if (input == "quit")
+			return 0;
+
+		cout << endl << "Solution: " << theTree.decode(input) << endl;
+
+	}
+
 }
