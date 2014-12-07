@@ -5,6 +5,7 @@
 #include "MorseTree.h"
 #include "Constants.h"
 #include <string>
+#include "fstream"
 
 
 MorseTree::MorseTree()  {
@@ -337,9 +338,8 @@ string MorseTree::decode(string input)
 		//code so we'll exit with an error
 		if (current == NULL)
 		{
-			cout << endl << "ERROR: Invalid morse character" << endl << endl;
 		
-			return "ERROR";
+			return "ERROR INVALID MORSE CHARACTER";
 		}
 	}
 	return solution;
@@ -351,71 +351,8 @@ string MorseTree::decode(string input)
 //Gretchen Gilbreath
 //Encode functions
 
-string MorseTree::encode1(string input)
-{
-	BTNode<char>* root = codeTree.getRoot();
-	ofstream of("output.txt");
 
-	string encodedWord = "";
-
-
-	//for (int i = 0; i < input.size(); i++)
-	for (string::iterator itr = input.begin(); itr < input.end(); itr++)
-	{
-		char temp = *itr;
-
-		//		char temp = input[i];
-
-		encodedWord+=encoder1(root, temp);
-
-
-		
-
-		encodedWord += " ";
-	}
-	encodedWord += "*";
-	of.close();
-	return encodedWord;
-}
-
-string MorseTree::encode2(string input)
-{
-	BTNode<char>* root = codeTree.getRoot();
-	ofstream of("output.txt");
-
-	string encodedWord = "";
-
-
-	//for (int i = 0; i < input.size(); i++)
-	for (string::iterator itr = input.begin(); itr < input.end(); itr++)
-	{
-		char temp = *itr;
-
-		string tempWord = "";
-
-		encoder2(tempWord, root, temp);
-
-
-		int size = tempWord.size();
-
-		for (int i = 0; i < size / 2; i++)
-		{
-			swap(tempWord[i], tempWord[size - i - 1]);
-		}
-
-		encodedWord += tempWord + " ";
-	}
-
-
-
-
-	encodedWord += "*";
-	of.close();
-	return encodedWord;
-}
-
-
-bool MorseTree::encoder2(string& input, BTNode<char>* root, char letter)
+bool encoder2(string& input, BTNode<char>* root, char letter)
 {
 	if (root->left == NULL && root->right == NULL)
 		return false;
@@ -469,12 +406,12 @@ bool MorseTree::encoder2(string& input, BTNode<char>* root, char letter)
 			return true;
 		}
 	}                             //the number isn't in the tree
-		return false;
+	return false;
 
 
 }
 
-string MorseTree::encoder1(BTNode<char>* root, char letter)
+string encoder1(BTNode<char>* root, char letter)
 {
 	if (root->left == NULL && root->right == NULL)
 		return "$";
@@ -489,11 +426,11 @@ string MorseTree::encoder1(BTNode<char>* root, char letter)
 			return "-";
 		}
 
-		else if (encoder1(root->left, letter)!="$")
+		else if (encoder1(root->left, letter) != "$")
 		{
 			return "-" + encoder1(root->left, letter);
 		}
-		else if (encoder1(root->right, letter)!="$")
+		else if (encoder1(root->right, letter) != "$")
 		{
 			return "." + encoder1(root->right, letter);
 		}
@@ -504,7 +441,7 @@ string MorseTree::encoder1(BTNode<char>* root, char letter)
 		{
 			return ".";
 		}
-		else if (encoder1(root->right, letter)!="$")
+		else if (encoder1(root->right, letter) != "$")
 		{
 			return "." + encoder1(root->right, letter);
 		}
@@ -515,10 +452,76 @@ string MorseTree::encoder1(BTNode<char>* root, char letter)
 		{
 			return "-";
 		}
-		else if (encoder1(root->left, letter)!="$")
+		else if (encoder1(root->left, letter) != "$")
 		{
 			return "_" + encoder1(root->left, letter);
 		}
 	}                             //the number isn't in the tree
 	return "$";
 }
+
+string MorseTree::encode1(string input)
+{
+	BTNode<char>* root = codeTree.getRoot();
+	ofstream of("output.txt");
+
+	string encodedWord = "";
+
+
+	//for (int i = 0; i < input.size(); i++)
+	for (string::iterator itr = input.begin(); itr < input.end(); itr++)
+	{
+		char temp = *itr;
+
+		//		char temp = input[i];
+
+		encodedWord += encoder1(root, temp);
+
+
+
+
+		encodedWord += " ";
+	}
+	encodedWord += "*";
+	of.close();
+	return encodedWord;
+}
+
+string MorseTree::encode2(string input)
+{
+	BTNode<char>* root = codeTree.getRoot();
+	ofstream of("output.txt");
+
+	string encodedWord = "";
+
+
+	//for (int i = 0; i < input.size(); i++)
+	for (string::iterator itr = input.begin(); itr < input.end(); itr++)
+	{
+		char temp = *itr;
+
+		string tempWord = "";
+
+		encoder2(tempWord, root, temp);
+
+
+		int size = tempWord.size();
+
+		for (int i = 0; i < size / 2; i++)
+		{
+			swap(tempWord[i], tempWord[size - i - 1]);
+		}
+
+		encodedWord += tempWord + " ";
+	}
+
+
+
+
+	encodedWord += "*";
+	of.close();
+	return encodedWord;
+}
+
+
+
