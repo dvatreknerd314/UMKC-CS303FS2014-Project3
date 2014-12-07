@@ -24,6 +24,14 @@ public:
 		//Takes a string of dots and dashes seperated by spaces
 		//Returns decoded string of letters
 	string decode(string input);
+	
+	//Gretchen Gilbreath
+	//Encode function
+		//Takes a word
+		//Returns a string of dots and dashes separated by spaces
+		
+	string encode1(string input);
+	string encode2(string input);
 
 private:
 	Binary_Tree<char> codeTree;
@@ -33,6 +41,10 @@ private:
 	int lineCounter = 0;
 	string processedSymbols = "";
 	void recursiveTreeOutput(int depth, size_t& width, size_t& rootPos, BTNode<char>* currentNode, deque<deque<char>>& subArray);
+	
+	//used with the encode1 and encode2 functions
+	bool encoder2(string& input, BTNode<char>* root, char letter);
+	string encoder1(BTNode<char>* root, char letter);
 };
 
 #endif
