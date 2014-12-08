@@ -2,14 +2,20 @@ Assumptions:
 	- Acceptable characters for a morse code tree include only alphabetic letters.
 	- Capital and lowercase letters are interchangable
 	- The number of acceptable characters can not exceed 30.  As such, code lines for code trees cannot exceed six characters.
-	- Multi-character tokens care not allowed
+	- Multi-character tokens are not allowed
+	- When decoding, multiple words are not supported
+	- Extra spaces are ok in a morse code message to be decoded
+	- Only 256 characters of input will ever be given for a message to encode or decode
+	
 	
 Choice Justifications:
 	- A string was used to contain acceptable characters for input to ease detection of acceptable characters and ease expansion of the acceptable character lists.
 	- The code tree is constructed as characters are added to prevent creation of a tree that is unnecessarily large for the needed character set.
 	- Multiple characters are allowed for dashes and dots in case other characters are preferred by a user.
+	- Decode uses an iterator to move through the string to be decoded
 	
 Runtimes:
+	Decode: O(nlgn);
 	Addition of each character: O(lgn);
 	
 UML Information:
