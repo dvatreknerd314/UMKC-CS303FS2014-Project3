@@ -9,7 +9,7 @@
 #include <deque>
 #include "Binary_Tree.h"
 #include "BTNode.h"
-#include "CacheTree.h"
+#include "Cache_Tree.h"
 using namespace std;
 
 class MorseTree
@@ -43,7 +43,7 @@ private:
 	void recursiveTreeOutput(int depth, size_t& width, size_t& rootPos, BTNode<char>* currentNode, deque<deque<char>>& subArray);
 	
 	bool encoder(string& input, BTNode<char>* root, char letter);//used with encode function
-	CacheTree cacheTree;//checks to see if a letter has already been searched in encode
+	Cache_Tree cacheTree;//checks to see if a letter has already been searched in encode
 };
 
 #endif
