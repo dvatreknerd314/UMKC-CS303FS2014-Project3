@@ -9,6 +9,7 @@
 #include <deque>
 #include "Binary_Tree.h"
 #include "BTNode.h"
+#include "CacheTree.h"
 using namespace std;
 
 class MorseTree
@@ -30,8 +31,7 @@ public:
 		//Takes a word
 		//Returns a string of dots and dashes separated by spaces
 		
-	string encode1(string input);
-	string encode2(string input);
+	string encode(string input);
 
 private:
 	Binary_Tree<char> codeTree;
@@ -42,9 +42,8 @@ private:
 	string processedSymbols = "";
 	void recursiveTreeOutput(int depth, size_t& width, size_t& rootPos, BTNode<char>* currentNode, deque<deque<char>>& subArray);
 	
-	//used with the encode1 and encode2 functions
-	bool encoder2(string& input, BTNode<char>* root, char letter);
-	string encoder1(BTNode<char>* root, char letter);
+	bool encoder(string& input, BTNode<char>* root, char letter);//used with encode function
+	CacheTree cacheTree;//checks to see if a letter has already been searched in encode
 };
 
 #endif
