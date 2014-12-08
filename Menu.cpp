@@ -60,7 +60,7 @@ int main()
 			cout << endl << "Please enter a word to encode: ";
 			cin.getline(input, 256);
 
-			cout << endl << "Code: " << theTree.encode1(input) << endl;
+			cout << endl << "Code: " << theTree.encode(input) << endl;
 			break;
 		//Case 3 Quit
 		case 3:
