@@ -32,7 +32,11 @@ and because each ASCII character (the assumed characters) corresponds to a uniqu
 
 Runtimes:
 
+
+//A traversal has a O(nlgn) runtime. Since this is in a for loop, the the encode runtime actually be O(n^2 lgn)?
 Encode: O(nlgn)
+Cache_Tree: O(nlgn)
+
 
 
 
