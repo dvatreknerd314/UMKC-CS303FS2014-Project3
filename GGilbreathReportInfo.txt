@@ -1,0 +1,38 @@
+UMKC-CS303FS2014-Project3
+=========================
+
+Repository for Project 3 for UMKC's Data Structures course
+
+Assumptions:
+
+encode function:
+*Input string and output string won't have more characters than are allowed in a string object.
+*A MorseTree object will have already been built with characters from a file before this function is called.
+*Input characters will be ASCII
+
+Cache_Tree class:
+*128 characters maximum may be used to build the Cache_Tree object. 
+*The value of the input characters should vary when input since there is not balance function.
+
+
+Choice Justifications:
+
+Encode
+*A bool return value was used so that errors could be dealt with differently than encoded characters.
+*The wrapper used string input and output for its ease of use.
+*String input and output also used to make the function easily accessible.
+*The first character from the DOTS and DASHES array was appended to the string instead of a '.' or a '-'
+to make sure that the encode and decode functions were using the same characters.
+
+Cache_Tree
+*No balance function was added since such a small range of characters is allowed.
+*Encoded letters were stored in an array of strings because there is a max number of allowed strings,
+and because each ASCII character (the assumed characters) corresponds to a unique and low value.
+
+
+Runtimes:
+
+Encode: O(nlgn)
+
+
+
