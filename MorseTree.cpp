@@ -351,7 +351,7 @@ string MorseTree::decode(string input)
 //Gretchen Gilbreath
 //Encode functions
 
-
+/*
 bool encoder2(string& input, BTNode<char>* root, char letter)
 {
 	if (root->left == NULL && root->right == NULL)
@@ -521,6 +521,87 @@ string MorseTree::encode2(string input)
 	encodedWord += "*";
 	of.close();
 	return encodedWord;
+}
+*/
+
+//returns an encoded word or string
+string MorseTree::encode(string input)
+{
+	BTNode<char>* root = codeTree.getRoot();
+	string encodedWord = "";
+
+	//for (int i = 0; i < input.size(); i++)
+	for (string::iterator itr = input.begin(); itr < input.end(); itr++)
+	{
+		//get the current letter to be encoded
+		char temp = *itr;
+		//if the letter isn't already in lowercase, put it in lowercase.
+		temp = tolower(temp);
+
+		//represents an encoded character
+		string encodedChar = "";
+		
+		if (cacheTree.find(temp)!=NULL)//if the cacheTree isn't empty, search to see if the character has already been found
+		{
+			encodedChar = cacheTree.getCode(temp);
+		}
+		else if(!encoder(encodedChar, root, temp))//if the letter isn't in the tree, return error
+		{
+			return "ERROR";
+		}
+		else//otherwise, add it to the tree
+		{
+			cacheTree.insert(temp, encodedChar);
+		}
+
+		//add an incoded character to the string to be returned
+		encodedWord += encodedChar + " ";
+	}
+
+	return encodedWord;
+}
+
+
+bool MorseTree::encoder(string& input, BTNode<char>* root, char letter)
+{
+	if (root->left == NULL && root->right == NULL)
+		return false;
+	else if (root->left != NULL && root->right != NULL)
+	{
+		if (root->right->data == letter)
+		{
+			input= DOTS[0] + input;
+			return true;
+		}
+		else if (root->left->data == letter)
+		{
+			input = DASHES[0] + input;
+			return true;
+		}
+
+		else if (encoder(input, root->left, letter))
+		{
+			input = DASHES[0] + input;
+			return true;
+		}
+		else if (encoder(input, root->right, letter))
+		{
+			input = DOTS[0] + input;
+			return true;
+		}
+	}
+	else if (root->left == NULL && ((root->right->data == letter) || encoder(input, root->right, letter)))
+	{
+		input = DOTS[0] + input;
+		return true;
+	}
+	else if (root->left->data == letter || encoder(input, root->left, letter))
+	{
+		input=DASHES[0] + input;
+		return true;
+	}
+	else//the character isn't in the tree
+		return false;
 }
 
 
